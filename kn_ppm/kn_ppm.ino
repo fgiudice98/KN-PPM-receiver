@@ -11,26 +11,26 @@
 
 // ############ Wiring ################
 //SPI Comm.pins with nRF24L01
-#define MOSI_pin  1  // MOSI - D3
-#define SCK_pin   3  // SCK  - D4
-#define CS_pin    2  // CE   - D5
-#define MISO_pin  4 // MISO - A0
-#define CE_pin    5 // CS   - A1
+#define MOSI_pin  1  // MOSI - P1
+#define SCK_pin   3  // SCK  - P3
+#define CS_pin    2  // CS   - P2
+#define MISO_pin  4 // MISO - P4
+#define CE_pin    5 // CE   - P5 (Unused)
 
 // SPI outputs
-#define  MISO_on (PINB & _BV(4)) // PC0*/
-#define MOSI_on PORTB |= 0b00000010  // PD3
-#define MOSI_off PORTB &= ~0b00000010// PD3
-#define SCK_on PORTB |= 0b00001000   // PD4
-#define SCK_off PORTB &= ~0b00001000 // PD4
-#define CS_on PORTB |= 0b00000100    // PD5
-#define CS_off PORTB &= ~0b00000100  // PD5
-#define CE_on PORTB |= 0b00100000    // PC1
-#define CE_off PORTB &= ~0b00100000  // PC1
+#define MISO_on (PINB & _BV(4)) // P4
+#define MOSI_on PORTB |= 0b00000010  // P1
+#define MOSI_off PORTB &= ~0b00000010// P1
+#define SCK_on PORTB |= 0b00001000   // P3
+#define SCK_off PORTB &= ~0b00001000 // P3
+#define CS_on PORTB |= 0b00000100    // P2
+#define CS_off PORTB &= ~0b00000100  // P2
+#define CE_on PORTB |= 0b00100000    // P5
+#define CE_off PORTB &= ~0b00100000  // P5
 // SPI input
-#define  MISO_on (PINB & 0b00010000) // PC0
+#define  MISO_on (PINB & 0b00010000) // P4
 
-#define RF_POWER TX_POWER_5mW //TX_POWER_80mW 
+#define RF_POWER TX_POWER_5mW
 
 bool bind = false, use1mbps = true, started = false, lost = false;
 byte hopping_channels[4], data[16];
@@ -90,7 +90,7 @@ void setup() {
     NRF24L01_WriteReg(NRF24L01_1C_DYNPD, 1);            //enable dynamic payload length on data pipe 0
     NRF24L01_WriteReg(NRF24L01_1D_FEATURE, _BV(NRF2401_1D_EN_DPL)); //enable dynamic payload length
 
-    NRF24L01_SetPower(RF_POWER);          //set rf power                    //
+    NRF24L01_SetPower(RF_POWER);          //set rf power
 
     NRF24L01_SetBitrate(NRF24L01_BR_1M);
     NRF24L01_WriteRegisterMulti(NRF24L01_0A_RX_ADDR_P0, (const byte*)"KNDZK", 5);
