@@ -146,7 +146,7 @@ void loop() {
     timing2 = m;
   }
 
-  if ((m - timing2) >= 750) {
+  if ((m - timing2) >= 500) {
     lost = true;
     TinyPpmGen.suspend();
     timing2 = m;
