@@ -37,8 +37,8 @@ byte hopping_channels[4], data[16];
 byte tx_addr[5];
 byte ch_index = 2, ch_indexl = 1;
 unsigned long timing = 0, timing2 = 0;
-int t, a, e, r, tway = 0;
-byte sw, th, id, dr, td, tr;
+int t, a, e, r, twayr = 0, twaya = 0;
+byte sw, th, id, dr, td, tr, ta;
 int deadline = 13;
 
 byte rssic = 0, rssir = 0;
@@ -192,19 +192,30 @@ void loop() {
     e += data[5];
     r = data[6] << 8;
     r += data[7];
+    ta = data[9];
     tr = data[11];
     sw = data[12];
     th = bitRead(sw, 1);
     id = bitRead(sw, 2);
     dr = bitRead(sw, 0);
     td = bitRead(sw, 6);
+
     if (tr < 100) {
-      tway = -1;
+      twayr = -1;
     } else if (tr > 100) {
-      tway = 1;
+      twayr = 1;
     } else {
-      tway = 0;
+      twayr = 0;
     }
+
+    if (ta < 100) {
+      twaya = -1;
+    } else if (tr > 100) {
+      twaya = 1;
+    } else {
+      twaya = 0;
+    }
+
     if (lost) {
       TinyPpmGen.resume();
     }
@@ -212,9 +223,9 @@ void loop() {
     TinyPpmGen.setChWidth_us(2, 988 + a);
     TinyPpmGen.setChWidth_us(3, 988 + e);
     TinyPpmGen.setChWidth_us(4, 988 + r);
-    TinyPpmGen.setChWidth_us(5, 1000 + (th * 1000));
-    TinyPpmGen.setChWidth_us(6, 1000 + (id * 600) + (td * 400));
-    TinyPpmGen.setChWidth_us(7, 1200 + (dr * 600) + (tway * 200));
+    TinyPpmGen.setChWidth_us(5, 1000 + (th * 600) + (td * 400));
+    TinyPpmGen.setChWidth_us(6, 1000 + (id * 600) + (twaya * 200));
+    TinyPpmGen.setChWidth_us(7, 1200 + (dr * 600) + (twayr * 200));
 
     ch_index++;
     rssic++;
