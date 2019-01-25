@@ -210,7 +210,7 @@ void loop() {
 
     if (ta < 100) {
       twaya = -1;
-    } else if (tr > 100) {
+    } else if (ta > 100) {
       twaya = 1;
     } else {
       twaya = 0;
@@ -224,7 +224,7 @@ void loop() {
     TinyPpmGen.setChWidth_us(3, 988 + e);
     TinyPpmGen.setChWidth_us(4, 988 + r);
     TinyPpmGen.setChWidth_us(5, 1000 + (th * 600) + (td * 400));
-    TinyPpmGen.setChWidth_us(6, 1000 + (id * 600) + (twaya * 200));
+    TinyPpmGen.setChWidth_us(6, 1200 + (id * 600) + (twaya * 200));
     TinyPpmGen.setChWidth_us(7, 1200 + (dr * 600) + (twayr * 200));
 
     ch_index++;
